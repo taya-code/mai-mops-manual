@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mai-Mops操作マニュアル｜毎日興業株式会社</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #E7DFC9;        /* マニラフォルダ色の紙面 */
+    --paper-card: #FBF7EE;   /* カード面（少し明るい紙） */
+    --ink: #22282E;          /* インク（本文） */
+    --ink-soft: #4B5560;     /* インク（補足） */
+    --line: #C9BFA0;         /* 罫線 */
+    --hanko: #A6332B;        /* 朱肉（アクセント） */
+    --hanko-dark: #7C2620;
+    --tab-navy: #33465A;
+    --shadow: 0 8px 24px rgba(34,40,46,0.08);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size:16px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3, .brand, .stamp-label{
+    font-family:'Shippori Mincho', serif;
+  }
+
+  a{ color:var(--hanko-dark); }
+
+  /* ---------- レイアウト ---------- */
+  .layout{
+    display:grid;
+    grid-template-columns: 236px 1fr;
+    min-height:100vh;
+  }
+
+  /* ---------- 綴じ紐風タブ（サイドナビ） ---------- */
+  .binder-rail{
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    padding:28px 0 28px 18px;
+    border-right:2px solid var(--line);
+  }
+  .binder-rail::-webkit-scrollbar{ width:6px; }
+  .binder-rail::-webkit-scrollbar-thumb{ background:var(--line); border-radius:4px; }
+
+  .rail-title{
+    font-size:12px;
+    letter-spacing:.18em;
+    color:var(--ink-soft);
+    padding:0 14px 18px 6px;
+    border-bottom:1px dashed var(--line);
+    margin-bottom:10px;
+  }
+
+  .tab{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    width:100%;
+    text-align:left;
+    background:var(--paper);
+    border:none;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    border-left:1px solid var(--line);
+    padding:14px 10px 14px 14px;
+    margin-bottom:8px;
+    margin-right:0;
+    border-radius:8px 0 0 8px;
+    cursor:pointer;
+    color:var(--ink);
+    transform:translateX(6px);
+    transition: transform .18s ease, background .18s ease, color .18s ease;
+    font-family:'Shippori Mincho', serif;
+  }
+  .tab:hover{ transform:translateX(0); background:var(--paper-card); }
+  .tab .kanji-num{
+    font-size:22px;
+    color:var(--ink-soft);
+    line-height:1;
+  }
+  .tab .tab-name{
+    font-size:14px;
+    line-height:1.4;
+  }
+  .tab.is-active{
+    background:var(--paper-card);
+    transform:translateX(0);
+    box-shadow:var(--shadow);
+    border-left:3px solid var(--hanko);
+  }
+  .tab.is-active .kanji-num{ color:var(--hanko); }
+
+  /* ---------- メインエリア ---------- */
+  main{ min-width:0; }
+
+  .hero{
+    position:relative;
+    padding:64px 56px 48px;
+    border-bottom:2px solid var(--line);
+    overflow:hidden;
+  }
+  .hero-eyebrow{
+    font-size:13px;
+    letter-spacing:.22em;
+    color:var(--ink-soft);
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:clamp(28px, 4vw, 42px);
+    margin:0 0 10px;
+    line-height:1.5;
+  }
+  .hero p.lead{
+    max-width:56ch;
+    color:var(--ink-soft);
+    margin:0;
+    font-size:16px;
+  }
+  .stamp{
+    position:absolute;
+    top:44px;
+    right:64px;
+    width:132px;
+    height:132px;
+    transform:rotate(-9deg);
+    opacity:.94;
+  }
+
+  section.chapter{
+    padding:56px;
+    border-bottom:2px solid var(--line);
+    scroll-margin-top:12px;
+  }
+  section.chapter:last-of-type{ border-bottom:none; }
+
+  .chapter-head{
+    display:flex;
+    align-items:flex-end;
+    gap:18px;
+    margin-bottom:34px;
+  }
+  .chapter-head .kanji-big{
+    font-size:52px;
+    color:var(--hanko);
+    line-height:1;
+  }
+  .chapter-head h2{
+    font-size:25px;
+    margin:0;
+  }
+  .chapter-lead{
+    color:var(--ink-soft);
+    font-size:15.5px;
+    max-width:64ch;
+    margin:-18px 0 30px;
+  }
+
+  .feature-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(210px,1fr));
+    gap:14px;
+    margin:8px 0 8px;
+  }
+  .feature-card{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 18px 16px;
+  }
+  .feature-card svg{ margin-bottom:10px; }
+  .feature-card h3{
+    font-size:16px;
+    margin:0 0 6px;
+  }
+  .feature-card p{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    margin:0;
+  }
+
+  .task{
+    margin-bottom:38px;
+  }
+  .task:last-child{ margin-bottom:0; }
+  .task h3{
+    font-size:17.5px;
+    margin:0 0 16px;
+    padding-bottom:8px;
+    border-bottom:1px dashed var(--line);
+  }
+
+  .step{
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    padding:14px 0;
+  }
+  .step + .step{ border-top:1px solid rgba(201,191,160,0.5); }
+
+  .step-mark{
+    flex:none;
+    width:34px;
+    height:34px;
+    position:relative;
+  }
+  .step-mark svg{ width:100%; height:100%; }
+  .step-mark span{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-family:'Shippori Mincho', serif;
+    font-size:15px;
+    font-weight:700;
+  }
+
+  .step-body p{
+    margin:0 0 8px;
+    font-size:15.5px;
+  }
+  .step-body .cap{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    background:rgba(166,51,43,0.06);
+    border:1px dashed var(--line);
+    padding:3px 9px;
+    border-radius:20px;
+  }
+
+  .shot {
+    margin-top: 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--paper-card);
+    padding: 14px;
+  }
+  .shot table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+  }
+  .shot table td {
+    padding: 0;
+    text-align: center;
+  }
+  .shot img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+  .shot table img {
+    width: 70%;
+  }
+
+  .note{
+    margin-top:18px;
+    padding:14px 16px;
+    background:rgba(166,51,43,0.06);
+    border-left:3px solid var(--hanko);
+    border-radius:0 8px 8px 0;
+    font-size:14.5px;
+    color:var(--ink-soft);
+  }
+
+  /* FAQ */
+  .faq-item{
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:var(--paper-card);
+    margin-bottom:10px;
+    overflow:hidden;
+  }
+  .faq-q{
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    padding:15px 46px 15px 18px;
+    position:relative;
+    font-size:15.5px;
+    font-family:'Shippori Mincho', serif;
+    cursor:pointer;
+    color:var(--ink);
+  }
+  .faq-q::after{
+    content:'+';
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:18px;
+    color:var(--hanko);
+    transition:transform .2s ease;
+  }
+  .faq-item.open .faq-q::after{ transform:translateY(-50%) rotate(45deg); }
+  .faq-a{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .25s ease;
+    font-size:14.5px;
+    color:var(--ink-soft);
+  }
+  .faq-a-inner{ padding:0 18px 16px; }
+  .faq-item.open .faq-a{ max-height:220px; }
+
+  .contact-card{
+    margin-top:26px;
+    display:flex;
+    gap:18px;
+    align-items:center;
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px 22px;
+  }
+  .contact-card h4{ margin:0 0 4px; font-size:15.5px; }
+  .contact-card p{ margin:0; font-size:14px; color:var(--ink-soft); }
+
+  footer{
+    padding:30px 56px 50px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+
+  /* モバイル：タブを上部の横スクロールに */
+  @media (max-width: 860px){
+    .layout{ grid-template-columns:1fr; }
+    .binder-rail{
+      position:sticky;
+      height:auto;
+      display:flex;
+      overflow-x:auto;
+      overflow-y:hidden;
+      padding:14px 12px;
+      border-right:none;
+      border-bottom:2px solid var(--line);
+      background:var(--paper);
+      z-index:5;
+    }
+    .rail-title{ display:none; }
+    .tab{
+      flex:none;
+      transform:none;
+      border-radius:8px;
+      margin:0 6px 0 0;
+      border:1px solid var(--line);
+      flex-direction:column;
+      align-items:center;
+      padding:10px 14px;
+    }
+    .tab.is-active{ transform:none; }
+    .hero{ padding:44px 24px 34px; }
+    .stamp{ width:92px; height:92px; top:24px; right:24px; }
+    section.chapter{ padding:36px 24px; }
+    footer{ padding:24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <nav class="binder-rail" id="rail">
+    <div class="rail-title">MANUAL INDEX</div>
+    <button class="tab" data-target="ch1"><span class="kanji-num">一</span><span class="tab-name">はじめに</span></button>
+    <button class="tab" data-target="ch2"><span class="kanji-num">二</span><span class="tab-name">稟議を<br>申請する</span></button>
+    <button class="tab" data-target="ch3"><span class="kanji-num">三</span><span class="tab-name">小口現金を<br>申請する</span></button>
+    <button class="tab" data-target="ch4"><span class="kanji-num">四</span><span class="tab-name">イベント情報<br>を登録する</span></button>
+    <button class="tab" data-target="ch5"><span class="kanji-num">五</span><span class="tab-name">掲示板を<br>使う</span></button>
+    <button class="tab" data-target="ch6"><span class="kanji-num">六</span><span class="tab-name">作業完了報告</span></button>
+    <button class="tab" data-target="ch7"><span class="kanji-num">七</span><span class="tab-name">報告書</span></button>
+    <button class="tab" data-target="ch8"><span class="kanji-num">八</span><span class="tab-name">困ったときは</span></button>
+  </nav>
+
+  <main>
+
+    <header class="hero">
+      <div class="hero-eyebrow">MAINICHI KOGYO CO., LTD. ／ DX推進部発行</div>
+      <h1>Mai-Mops操作マニュアル</h1>
+      <p class="lead">稟議・小口現金申請・イベント情報・掲示板の使い方を、日々の業務の流れに沿ってまとめました。わからなくなったら、まず目次から該当のページを開いてください。</p>
+      <svg class="stamp" viewBox="0 0 140 140">
+        <path fill="none" stroke="#A6332B" stroke-width="3.2"
+          d="M70,6 C95,4 128,20 132,55 C136,92 116,124 78,133
+             C44,141 10,120 7,84 C4,50 30,10 70,6 Z"
+          opacity="0.9"/>
+        <text x="70" y="65" text-anchor="middle" font-family="'Shippori Mincho', serif"
+              font-size="30" fill="#A6332B" font-weight="700">手引</text>
+        <text x="70" y="97" text-anchor="middle" font-family="'Shippori Mincho', serif"
+              font-size="14" fill="#A6332B">DX推進部</text>
+      </svg>
+    </header>
+
+    <!-- 第一章 -->
+    <section class="chapter" id="ch1">
+      <div class="chapter-head">
+        <span class="kanji-big">一</span>
+        <h2>はじめに</h2>
+      </div>
+      <p class="chapter-lead">このシステムで何ができるか、まず全体像をつかみましょう。</p>
+
+      <div class="task">
+        <h3>このシステムでできること</h3>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A6332B" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+            <h3>稟議</h3>
+            <p>決裁が必要な申請を起票し、承認の進み具合を確認できます。</p>
+          </div>
+          <div class="feature-card">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A6332B" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M9.5 15c0 1.2 1.1 1.8 2.5 1.8s2.5-.7 2.5-1.8c0-2.4-5-1.2-5-3.6 0-1.1 1.1-1.8 2.5-1.8s2.5.6 2.5 1.6"/></svg>
+            <h3>小口現金申請</h3>
+            <p>立て替えた経費の申請と、領収書の添付ができます。</p>
+          </div>
+          <div class="feature-card">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A6332B" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+            <h3>イベント情報</h3>
+            <p>社内行事や研修などのお知らせを登録・確認できます。</p>
+          </div>
+          <div class="feature-card">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A6332B" stroke-width="1.8"><rect x="3.5" y="4" width="17" height="16" rx="1.5"/><path d="M7 9h5M7 13h9M7 17h6"/><circle cx="17.3" cy="8.6" r="1"/></svg>
+            <h3>掲示板</h3>
+            <p>部署や全社からの連絡を見たり、投稿したりできます。</p>
+          </div>
+          <div class="feature-card">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A6332B" stroke-width="1.8"><path d="M9 11l2 2 4-4"/><rect x="3.5" y="3.5" width="17" height="17" rx="2"/></svg>
+            <h3>作業完了報告</h3>
+            <p>現場で行った作業の完了報告を、施工書を添えて提出できます。</p>
+          </div>
+          <div class="feature-card">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A6332B" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 7h8M8 11h8M8 15h5"/><path d="M15.5 15.5l3 3"/></svg>
+            <h3>報告書</h3>
+            <p>報告書ファイルの提出と、提出済み報告書の確認ができます。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="task">
+        <h3>ログインする</h3>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>1</span></div>
+          <div class="step-body">
+            <p>エリアマネージャーより届いたURLのリンクを開きます。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>2</span></div>
+          <div class="step-body">
+            <p>エリアマネージャーより届いたユーザー名とパスワードを入力し、ログインボタンを押します。</p>
+            <div class="shot"><img src="img/login.png"></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>3</span></div>
+          <div class="step-body">
+            <p>トップ画面が表示されます。上部のメニューから各機能に移動できます。</p>
+            <div class="shot"><img src="img/top.png"></div>
+          </div>
+        </div>
+        <div class="note">パスワードを忘れた場合は、第八章「困ったときは」をご確認ください。</div>
+      </div>
+    </section>
+
+    <!-- 第二章 -->
+    <section class="chapter" id="ch2">
+      <div class="chapter-head">
+        <span class="kanji-big">二</span>
+        <h2>稟議を申請する</h2>
+      </div>
+      <p class="chapter-lead">起票・確認・再申請までの一連の流れをまとめています。</p>
+
+      <div class="task">
+        <h3>新規稟議を起票する</h3>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>1</span></div>
+          <div class="step-body"><p>メニューから「稟議書申請」ボタンを押します。</p></div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>2</span></div>
+          <div class="step-body">
+            <p>件名・内容・金額など必要事項を入力します。</p>
+            <span class="cap">必須項目には「必須」と記述が付いています</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>3</span></div>
+          <div class="step-body"><p>関連資料があれば添付し、必要項目を入力したうえで「確認」を押します。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/ringi1.png"></td></tr>
+              <tr><td><img src="img/ringi2.png"></td></tr>
+              <tr><td><img src="img/ringi3.png"></td></tr>
+              <tr><td><img src="img/ringi4.png"></td></tr>
+            </table>
+          </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>4</span></div>
+          <div class="step-body"><p>内容を確認し「申請」を押して完了です。「戻る」で入力画面に戻ります。<br>申請すると選択したエリアマネージャーへ通知が行きます。その他の場合は木下部長です。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/ringi9.png"></td></tr>
+              <tr><td><img src="img/ringi10.png"></td></tr>
+              <tr><td><img src="img/ringi11.png"></td></tr>
+            </table>
+          </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>注</span></div>
+          <div class="step-body"><p>途中まで入力し確認前の場合は「一時保存」ボタンを押すと再度開いた時続きから入力可能です。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/ringi5.png"></td></tr>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="task">
+        <h3>申請状況を確認する</h3>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>1</span></div>
+          <div class="step-body"><p>トップメニューの「稟議書状況」を開きます。</p></div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>2</span></div>
+          <div class="step-body"><p>別画面で全施設の稟議状況一覧が開きます。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/ringi6.png"></td></tr>
+            </table>
+          </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>3</span></div>
+          <div class="step-body"><p>検索や並び替えが可能です。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/ringi7.png"></td></tr>
+              <tr><td><img src="img/ringi8.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>4</span></div>
+          <div class="step-body"><p>ステータス欄で「未申請」「承認中」「完了」を確認できます。</p></div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>注</span></div>
+          <div class="step-body"><p>詳細内容や差戻しは出来ません。再申請したい場合はエリアマネージャーへ連絡してください。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第三章 -->
+    <section class="chapter" id="ch3">
+      <div class="chapter-head">
+        <span class="kanji-big">三</span>
+        <h2>小口現金を申請する</h2>
+      </div>
+      <p class="chapter-lead">立て替え経費の申請から承認確認までの手順です。</p>
+
+      <div class="task">
+        <h3>新規申請の手順</h3>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>1</span></div>
+          <div class="step-body"><p>メニューから「小口現金依頼兼精算書」ボタンを押します。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>2</span></div>
+          <div class="step-body"><p>指定管理施設・社員番号・申請者など必要事項を入力し確認を押します。</p>
+          <span class="cap">必須項目には「必須」と記述が付いています</span>
+          <div class="shot">
+            <table>
+              <tr><td><img src="img/koguchi1.png"></td></tr>
+              <tr><td><img src="img/koguchi2.png"></td></tr>
+            </table>
+          </div>
+          </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>3</span></div>
+          <div class="step-body"><p>内容を確認し「申請」を押して完了です。「戻る」で入力画面に戻ります。<br>申請すると選択したエリアマネージャーへ通知が行きます。その他の場合は木下部長です。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/koguchi3.png"></td></tr>
+              <tr><td><img src="img/koguchi4.png"></td></tr>
+            </table>
+          </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>注</span></div>
+          <div class="step-body"><p>途中まで入力し確認前の場合は「一時保存」ボタンを押すと再度開いた時続きから入力可能です。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/ringi5.png"></td></tr>
+            </table>
+          </div>
+          </div>
+        </div>
+      <div class="task">
+        <h3>申請状況を確認する</h3>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>1</span></div>
+          <div class="step-body"><p>メニューから「小口現金申請一覧」ボタンを押します。</p></div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>2</span></div>
+          <div class="step-body"><p>別画面で全施設の申請状況一覧が開きます。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/koguchi5.png"></td></tr>
+            </table>
+          </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>3</span></div>
+          <div class="step-body"><p>検索や並び替えが可能です。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/koguchi6.png"></td></tr>
+              <tr><td><img src="img/koguchi7.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>4</span></div>
+          <div class="step-body"><p>ステータス欄で「未申請」「承認中」「精算完了」等を確認できます。</p></div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>5</span></div>
+          <div class="step-body"><p>ステータス欄が「精算完了」になると振込日が表示されます。</p></div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>注</span></div>
+          <div class="step-body"><p>詳細内容や差戻しは出来ません。再申請したい場合はエリアマネージャーへ連絡してください。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第四章 -->
+    <section class="chapter" id="ch4">
+      <div class="chapter-head">
+        <span class="kanji-big">四</span>
+        <h2>イベント情報を登録する</h2>
+      </div>
+      <p class="chapter-lead">社内行事や研修などのお知らせを確認する方法です。</p>
+
+      <div class="task">
+        <h3>イベント情報を登録する</h3>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>1</span></div>
+          <div class="step-body"><p>メニューから「イベント登録」ボタンを押します。</p></div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>2</span></div>
+          <div class="step-body"><p>タイトル・開催日・開催内容など必要事項を入力し確認を押します。</p>
+          <span class="cap">必須項目には「必須」と記述が付いています。基本自動入力されています</span>
+          <div class="shot">
+            <table>
+              <tr><td><img src="img/event1.png"></td></tr>
+              <tr><td><img src="img/event2.png"></td></tr>
+            </table>
+          </div>
+          </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>3</span></div>
+          <div class="step-body"><p>内容を確認し「登録」を押して完了です。「戻る」で入力画面に戻ります。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/event3.png"></td></tr>
+              <tr><td><img src="img/event4.png"></td></tr>
+            </table>
+          </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>注</span></div>
+          <div class="step-body"><p>途中まで入力し確認前の場合は「一時保存」ボタンを押すと再度開いた時続きから入力可能です。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/ringi5.png"></td></tr>
+            </table>
+          </div>
+          </div>
+        </div>
+
+      <div class="task">
+        <h3>イベント情報を見る</h3>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>1</span></div>
+          <div class="step-body"><p>メニューから「イベント一覧」ボタンを押します。</p></div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>2</span></div>
+          <div class="step-body"><p>開催日が近い順に一覧が表示されます。件名を押すと詳細が確認できます。<br>開催日を過ぎたイベントは表示されません。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/event5.png"></td></tr>
+              <tr><td><img src="img/event8.png"></td></tr>
+            </table>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>3</span></div>
+          <div class="step-body"><p>検索や並び替えが可能です。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/event6.png"></td></tr>
+              <tr><td><img src="img/event7.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+
+    </section>
+
+    <!-- 第五章 -->
+    <section class="chapter" id="ch5">
+      <div class="chapter-head">
+        <span class="kanji-big">五</span>
+        <h2>掲示板を使う</h2>
+      </div>
+      <p class="chapter-lead">連絡の閲覧と投稿、どちらもここで説明します。</p>
+
+      <div class="task">
+        <h3>投稿を見る</h3>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>1</span></div>
+          <div class="step-body"><p>Mai-Mopsトップメニューにて「連絡事項」が新着順に投稿が並びます。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/bbs1.png"></td></tr>
+            </table>
+            </div>
+        </div>
+        </div>
+      </div>
+      <div class="task">
+        <h3>投稿する</h3>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>1</span></div>
+          <div class="step-body"><p>メニューの「連絡事項」ボタンを押し、タイトルと施設名と内容を入力します。</p>
+          <span class="cap">必須項目には「必須」と記述が付いています。基本自動入力されています</span>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/bbs2.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>2</span></div>
+          <div class="step-body"><p>公開フラグにチェック入れなければ表示されません</p></div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>3</span></div>
+          <div class="step-body"><p>内容を確認し、「確認」を押します。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/bbs3.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>4</span></div>
+          <div class="step-body"><p>内容を確認し「登録」を押して完了です。「戻る」で入力画面に戻ります。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/bbs4.png"></td></tr>
+            </table>
+          </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>注</span></div>
+          <div class="step-body"><p>途中まで入力し確認前の場合は「一時保存」ボタンを押すと再度開いた時続きから入力可能です。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/ringi5.png"></td></tr>
+            </table>
+          </div>
+          </div>
+        </div>
+        <div class="note">投稿した内容は全ての指定管理者メンバー全員に表示されます。個人情報の記載には注意してください。</div>
+      </div>
+    </section>
+
+    <!-- 第六章 -->
+    <section class="chapter" id="ch6">
+      <div class="chapter-head">
+        <span class="kanji-big">六</span>
+        <h2>作業完了報告を行う</h2>
+      </div>
+      <p class="chapter-lead">作業完了報告連絡投稿をここで説明します。</p>
+
+      <div class="task">
+        <h3>提出する</h3>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>1</span></div>
+          <div class="step-body"><p>メニューにて「作業完了報告」ボタンを押します。指定管理物件ページが開きます</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/sagyo1.png"></td></tr>
+              <tr><td><img src="img/sagyo2.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>2</span></div>
+          <div class="step-body"><p>お客様名・物件コード・建物名・現場名・作業予定検索に入力されている事を<br>確認して赤枠の虫眼鏡ボタンを押します。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/sagyo3.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>3</span></div>
+          <div class="step-body"><p>今月・来月の作業予定が表示されます。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/sagyo4.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>4</span></div>
+          <div class="step-body"><p>実際に行った作業をクリックします。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/sagyo5.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>5</span></div>
+          <div class="step-body"><p>赤枠に囲まれた項目が自動で入力されます。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/sagyo6.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>6</span></div>
+          <div class="step-body"><p>赤枠に囲まれた項目を手入力しサインを貰った施工書をスキャンし添付します。<br>複数もしくは纏めて提出したい場合は＋ボタンで行を増やせます。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/sagyo7.png"></td></tr>
+              <tr><td><img src="img/sagyo8.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>7</span></div>
+          <div class="step-body"><p>内容を確認し「完了報告」を押して完了です。「戻る」で入力画面に戻ります。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/sagyo9.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>注</span></div>
+          <div class="step-body"><p>途中まで入力し確認前の場合は「一時保存」ボタンを押すと再度開いた時続きから入力可能です。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/ringi5.png"></td></tr>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第七章 -->
+    <section class="chapter" id="ch7">
+      <div class="chapter-head">
+        <span class="kanji-big">七</span>
+        <h2>報告書の提出・確認を行う</h2>
+      </div>
+      <p class="chapter-lead">報告書の提出・確認、どちらもここで説明します。</p>
+
+      <div class="task">
+        <h3>報告書を提出する</h3>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>1</span></div>
+          <div class="step-body"><p>Mai-Mopsトップメニューにて「報告書提出」のURLをクリックします。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/report1.png"></td></tr>
+            </table>
+            </div>
+        </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>2</span></div>
+          <div class="step-body"><p>アップロード専用画面が開くのでファイルをアップします。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/report2.png"></td></tr>
+            </table>
+            </div>
+          </div>
+          </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>3</span></div>
+          <div class="step-body"><p>「アップロード」ボタンを押して完了です。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/report3.png"></td></tr>
+            </table>
+            </div>
+          </div>
+          </div>
+      </div>
+      <div class="task">
+        <h3>確認する</h3>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>1</span></div>
+          <div class="step-body"><p>Mai-Mopsトップメニューにて「報告書確認」のURLをクリックします。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/report4.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-mark"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15.5" fill="#A6332B"/></svg><span>2</span></div>
+          <div class="step-body"><p>参照用画面が開き表示されます。ダウンロードや参照は出来ますが編集は出来ません。</p>
+            <div class="shot">
+            <table>
+              <tr><td><img src="img/report5.png"></td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第八章 -->
+    <section class="chapter" id="ch8">
+      <div class="chapter-head">
+        <span class="kanji-big">八</span>
+        <h2>困ったときは</h2>
+      </div>
+      <p class="chapter-lead">よくある質問と、お問い合わせ先をまとめています。</p>
+
+      <div class="task">
+        <h3>よくある質問</h3>
+
+        <div class="faq-item">
+          <button class="faq-q">パスワードを忘れてしまいました</button>
+          <div class="faq-a"><div class="faq-a-inner">エリアマネージャーへご連絡ください。</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">URLを忘れてしまいました</button>
+          <div class="faq-a"><div class="faq-a-inner">エリアマネージャーへご連絡ください。</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">申請したのに一覧に反映されません</button>
+          <div class="faq-a"><div class="faq-a-inner">画面を再読み込みしても反映されない場合、入力途中で「申請する」が正しく押されていない可能性があります。もう一度入力内容をご確認ください。</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">稟議を出し直したい</button>
+          <div class="faq-a"><div class="faq-a-inner">エリアマネージャーへ連絡し再申請してください。</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">掲示板の投稿を削除したい</button>
+          <div class="faq-a"><div class="faq-a-inner">記事の削除は直接出来ないのでエリアマネージャーへ依頼してください。</div></div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#A6332B" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        <div>
+          <h4>Mai-Mops操作に関するお問い合わせ先</h4>
+          <p>DX推進部</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      毎日興業株式会社　DX推進部　Mai-Mops操作マニュアル<br>
+      本マニュアルの内容は予告なく更新される場合があります。
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // タブ切り替え（クリックでスクロール）
+  const tabs = document.querySelectorAll('.tab');
+  const sections = Array.from(tabs).map(t => document.getElementById(t.dataset.target));
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.getElementById(tab.dataset.target).scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  const setActive = (id) => {
+    tabs.forEach(t => t.classList.toggle('is-active', t.dataset.target === id));
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){ setActive(entry.target.id); }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(sec => sec && observer.observe(sec));
+  setActive('ch1');
+
+  // FAQ アコーディオン
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o => o !== item && o.classList.remove('open'));
+      item.classList.toggle('open', !isOpen);
+    });
+  });
+</script>
+
+</body>
+</html>
